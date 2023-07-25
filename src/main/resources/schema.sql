@@ -1,7 +1,7 @@
 create table regions_dictionary (
     id int primary key,
-    name varchar (120) unique not null,
-    shortName varchar (10) unique not null
+    name varchar (120) not null,
+    shortName varchar (10) not null
 );
 
 insert into regions_dictionary values (5, 'Республика Дагестан',  'DA');

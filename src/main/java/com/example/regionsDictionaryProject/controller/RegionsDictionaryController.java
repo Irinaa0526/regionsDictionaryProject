@@ -1,7 +1,7 @@
 package com.example.regionsDictionaryProject.controller;
 
 import com.example.regionsDictionaryProject.model.RegionsDictionary;
-import com.example.regionsDictionaryProject.mapper.RegionsDictionaryMapper;
+import com.example.regionsDictionaryProject.service.RegionsDictionaryService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,33 +10,29 @@ import java.util.List;
 @RequestMapping("/regions_dictionary")
 public class RegionsDictionaryController {
 
-    private RegionsDictionaryMapper regionsDictionaryMapper;
+    private RegionsDictionaryService regionsDictionaryService;
 
-    public RegionsDictionaryController(RegionsDictionaryMapper regionsDictionaryMapper) {
-        this.regionsDictionaryMapper = regionsDictionaryMapper;
+    public RegionsDictionaryController(RegionsDictionaryService regionsDictionaryService) {
+        this.regionsDictionaryService = regionsDictionaryService;
     }
 
     @GetMapping("/all")
     public List<RegionsDictionary> getAll() {
-        return regionsDictionaryMapper.findAll();
+        return regionsDictionaryService.getAllRegions();
     }
 
-    @GetMapping("/create")
-    public List<RegionsDictionary> create(@RequestParam int id, @RequestParam String name, @RequestParam String shortName) {
-        RegionsDictionary regionsDictionary = new RegionsDictionary(id, name, shortName);
-        regionsDictionaryMapper.create(regionsDictionary);
-        return regionsDictionaryMapper.findAll();
+    @PostMapping("/create")
+    public RegionsDictionary create(@RequestParam Integer id, @RequestParam String name, @RequestParam String shortName) {
+        return regionsDictionaryService.createRegion(id, name, shortName);
     }
 
-    @GetMapping("/update")
-    public List<RegionsDictionary> update(@RequestParam int id, @RequestParam String name, @RequestParam String shortName) {
-        regionsDictionaryMapper.update(id, name, shortName);
-        return regionsDictionaryMapper.findAll();
+    @PostMapping("/update/{oldId}")
+    public RegionsDictionary update(@PathVariable Integer oldId, @RequestParam Integer newId, @RequestParam String name, @RequestParam String shortName) {
+        return regionsDictionaryService.updateRegion(oldId, newId, name, shortName);
     }
 
-    @GetMapping("/delete/{id}")
-    public List<RegionsDictionary> delete(@PathVariable int id) {
-        regionsDictionaryMapper.delete(id);
-        return regionsDictionaryMapper.findAll();
+    @DeleteMapping("/delete/{id}")
+    public List<RegionsDictionary> delete(@PathVariable Integer id) {
+        return regionsDictionaryService.deleteRegion(id);
     }
 }
