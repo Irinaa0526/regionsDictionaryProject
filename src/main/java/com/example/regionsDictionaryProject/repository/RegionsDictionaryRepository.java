@@ -1,4 +1,4 @@
-package com.example.regionsDictionaryProject.mapper;
+package com.example.regionsDictionaryProject.repository;
 
 import com.example.regionsDictionaryProject.model.RegionsDictionary;
 import org.apache.ibatis.annotations.*;
@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface RegionsDictionaryMapper {
+public interface RegionsDictionaryRepository {
     @Select("select * from regions_dictionary order by name")
     List<RegionsDictionary> findAll();
 
